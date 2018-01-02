@@ -8,18 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class MapViewController: UIViewController {
+    @IBOutlet weak var buttonHeightConstant: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func showPinDetailOnTap(_ sender: Any) {
+        performSegue(withIdentifier: "showPinDetail", sender: nil)
     }
-
-
 }
 
