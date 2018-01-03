@@ -20,6 +20,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXk-BN-nD3">
                                 <rect key="frame" x="0.0" y="64" width="375" height="545"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="4oa-42-uY6"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2VE-m4-NuE">
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
@@ -53,7 +56,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="buttonHeightConstant" destination="fN4-Su-ITK" id="eVu-Zb-Nf6"/>
+                        <outlet property="buttonHeightConstraint" destination="fN4-Su-ITK" id="eVu-Zb-Nf6"/>
+                        <outlet property="mapView" destination="IXk-BN-nD3" id="c5T-ib-Af9"/>
                         <segue destination="RNg-aX-yZ7" kind="show" identifier="showPinDetail" id="Den-4z-mmj"/>
                     </connections>
                 </viewController>
@@ -61,10 +65,10 @@
             </objects>
             <point key="canvasLocation" x="456.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="xwA-Rp-5w1">
             <objects>
-                <viewController id="RNg-aX-yZ7" sceneMemberID="viewController">
+                <viewController id="RNg-aX-yZ7" customClass="PINDetailViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dcb-Ih-x5z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,22 +78,25 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="5g2-0k-1dC"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="RNg-aX-yZ7" id="Jjl-LV-hgL"/>
+                                </connections>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Gn-Fg-fpV">
                                 <rect key="frame" x="0.0" y="203" width="375" height="464"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NDl-wh-gFF">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="119" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vqF-bP-pSv">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="119" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="119" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                     </collectionViewCell>
@@ -108,6 +115,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gLS-41-GYH"/>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="1Gn-Fg-fpV" id="pJ5-Xk-kpx"/>
+                        <outlet property="mapView" destination="Dcb-Ih-x5z" id="pQf-Nb-wnW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H0W-vn-A8m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
