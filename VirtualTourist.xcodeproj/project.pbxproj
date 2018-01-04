@@ -14,6 +14,7 @@
 		CE1CE2331FF9790E0022F57B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1CE2311FF9790E0022F57B /* Main.storyboard */; };
 		CE1CE2351FF9790E0022F57B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1CE2341FF9790E0022F57B /* Assets.xcassets */; };
 		CE1CE2381FF9790E0022F57B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE1CE2361FF9790E0022F57B /* LaunchScreen.storyboard */; };
+		CEB05BF81FFDC81200A8B121 /* FlickrHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB05BF71FFDC81200A8B121 /* FlickrHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		CE1CE2341FF9790E0022F57B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE1CE2371FF9790E0022F57B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE1CE2391FF9790E0022F57B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEB05BF71FFDC81200A8B121 /* FlickrHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		C392B5781FFD5DBB00E62B53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CEB05BF71FFDC81200A8B121 /* FlickrHandler.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB05BF81FFDC81200A8B121 /* FlickrHandler.swift in Sources */,
 				CE1CE2301FF9790E0022F57B /* MapViewController.swift in Sources */,
 				C392B57A1FFD722600E62B53 /* PINDetailViewController.swift in Sources */,
 				C392B5761FFD5D9000E62B53 /* Util.swift in Sources */,
