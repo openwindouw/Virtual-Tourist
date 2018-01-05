@@ -12,26 +12,40 @@ class PINDetailViewController: UIViewController {
     @IBOutlet var mapView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let itemsPerRow: CGFloat = 3
+    let sectionInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    
+    var itemWidth = CGFloat.leastNormalMagnitude
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.dataSource = self
-   
-//        if let layout = collectionView.collectionViewLayout as? FlickrLayout {
+//        view.setNeedsLayout()
+//        view.layoutIfNeeded()
 //
-//        }
+//
+//        collectionView.contentInsetAdjustmentBehavior = .never
+//
+        collectionView.dataSource = self
+//
+//        let layout = UICollectionViewFlowLayout()
+//        let collectionViewWidth = collectionView.bounds.width
+//
+//        itemWidth = ((collectionViewWidth - (sectionInsets.left * (itemsPerRow + 1))) / itemsPerRow)
+//
+//        layout.sectionInset = sectionInsets
+//        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+//        layout.minimumLineSpacing = sectionInsets.left
+//        layout.minimumInteritemSpacing = 8
+//        layout.headerReferenceSize = CGSize(width: collectionViewWidth, height: collectionViewWidth)
+//        collectionView.setCollectionViewLayout(layout, animated: true)
         
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange(notification:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
         
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc func orientationDidChange(notification: Notification) {
-        print("hoho")
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
