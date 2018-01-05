@@ -11,11 +11,26 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        contentView.setNeedsLayout()
+        contentView.layoutIfNeeded()
+        
         photoImageView.contentMode = .scaleAspectFit
         photoImageView.backgroundColor = UIColor.darkGray
+        
+    }
+    
+    func showActivityIndicator() {
+        activityView.startAnimating()
+    }
+
+    func hideActivityIndicator() {
+        activityView.stopAnimating()
     }
     
 }

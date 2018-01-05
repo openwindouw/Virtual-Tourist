@@ -31,6 +31,9 @@ class FlickrLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
+        
+        super.prepare()
+        
         guard cache.isEmpty, let collectionView = collectionView else { return }
         
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
@@ -47,7 +50,8 @@ class FlickrLayout: UICollectionViewLayout {
             let indexPath = IndexPath(item: item, section: 0)
             
             let photoHeith = columnWidth
-            let height = cellPadding * 2 + photoHeith
+//            let height = cellPadding * 2 + photoHeith
+            let height = photoHeith
             
             let frame = CGRect(x: xOffSet[column], y: yOffSet[column], width: columnWidth, height: height)
             

@@ -20,27 +20,8 @@ class PINDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        view.setNeedsLayout()
-//        view.layoutIfNeeded()
-//
-//
-//        collectionView.contentInsetAdjustmentBehavior = .never
-//
         collectionView.dataSource = self
-//
-//        let layout = UICollectionViewFlowLayout()
-//        let collectionViewWidth = collectionView.bounds.width
-//
-//        itemWidth = ((collectionViewWidth - (sectionInsets.left * (itemsPerRow + 1))) / itemsPerRow)
-//
-//        layout.sectionInset = sectionInsets
-//        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
-//        layout.minimumLineSpacing = sectionInsets.left
-//        layout.minimumInteritemSpacing = 8
-//        layout.headerReferenceSize = CGSize(width: collectionViewWidth, height: collectionViewWidth)
-//        collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -55,7 +36,8 @@ extension PINDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
+        cell.showActivityIndicator()
         return cell
     }
 }
