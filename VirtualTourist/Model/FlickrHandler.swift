@@ -18,8 +18,6 @@ class FlickrHandler: NSObject {
         let request = NSMutableURLRequest(url: URLFromParameters(parameters, withPathExtension: method))
         request.httpMethod = verb.method()
         
-        request.addValue(FlickrHandler.Constants.ApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(FlickrHandler.Constants.RestApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
         if let jsonBody = jsonBody {
             request.httpBody = Util.prepareForJsonBody(jsonBody)
@@ -101,9 +99,6 @@ extension FlickrHandler {
     struct Constants {
         // MARK: API Key
         static let ApiKey = "424d08d26e5c2dc68ee0eae8e482ae87"
-        
-        // MARK: Rest API Key
-        static let RestApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
         // MARK: URLs
         static let ApiScheme = "https"

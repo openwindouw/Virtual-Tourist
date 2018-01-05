@@ -47,6 +47,14 @@ class MapViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: nil)
+//        guard segue.identifier == "showPinDetail", let destination = segue.destination as? PINDetailViewController else { return }
+        
+        
+        
+    }
+    
     
 }
 
@@ -59,20 +67,14 @@ extension MapViewController: MKMapViewDelegate {
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView?.canShowCallout = false
-//            pinView?.calloutOffset = CGPoint(x: -20, y: 10)
             pinView?.pinTintColor = .red
             pinView?.animatesDrop = true
-//            pinView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             pinView?.annotation = annotation
         }
         
         return pinView
     }
-    
-//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        performSegue(withIdentifier: "showPinDetail", sender: nil)
-//    }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         performSegue(withIdentifier: "showPinDetail", sender: nil)
