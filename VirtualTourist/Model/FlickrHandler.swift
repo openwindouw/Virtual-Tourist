@@ -107,6 +107,6 @@ extension FlickrHandler {
     }
     
     struct Methods {
-        static let StudentLocation = "/StudentLocation"
+        static let SearchPhotos = "/flickr.photos.search"
     }
 }

@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 class PINDetailViewController: UIViewController {
-    @IBOutlet var mapView: UIView!
+    
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var mapView: MKMapView!
+    
+    var selectedAnnotation: MKAnnotation!
     
     let itemsPerRow: CGFloat = 3
     let sectionInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
@@ -21,6 +25,12 @@ class PINDetailViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.dataSource = self
+        
+        mapView.isZoomEnabled = false
+        mapView.isScrollEnabled = false
+        mapView.isUserInteractionEnabled = false
+        
+        mapView.showAnnotations([selectedAnnotation], animated: true)
 
     }
     
@@ -39,6 +49,25 @@ extension PINDetailViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
         cell.showActivityIndicator()
         return cell
+    }
+}
+
+extension PINDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView?.canShowCallout = false
+            pinView?.pinTintColor = .red
+            pinView?.animatesDrop = true
+        } else {
+            pinView?.annotation = annotation
+        }
+        
+        return pinView
     }
 }
 

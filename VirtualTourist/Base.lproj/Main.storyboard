@@ -139,7 +139,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="1Gn-Fg-fpV" id="pJ5-Xk-kpx"/>
-                        <outlet property="mapView" destination="Dcb-Ih-x5z" id="pQf-Nb-wnW"/>
+                        <outlet property="mapView" destination="UrU-io-zFD" id="7DD-F2-SRR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H0W-vn-A8m" userLabel="First Responder" sceneMemberID="firstResponder"/>

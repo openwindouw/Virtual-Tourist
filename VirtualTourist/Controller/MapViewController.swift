@@ -13,6 +13,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var buttonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
     
+    var selectedAnnotation: MKAnnotation!
+    
     let buttonHeigh: CGFloat = 40
     
     var annotations: [MKPointAnnotation] = []
@@ -49,10 +51,9 @@ class MapViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: nil)
-//        guard segue.identifier == "showPinDetail", let destination = segue.destination as? PINDetailViewController else { return }
-        
-        
-        
+
+        guard segue.identifier == "showPinDetail", let destination = segue.destination as? PINDetailViewController else { return }
+        destination.selectedAnnotation = selectedAnnotation
     }
     
     
@@ -77,6 +78,10 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        selectedAnnotation = view.annotation
+        
+        mapView.deselectAnnotation(view.annotation, animated: true)
+        
         performSegue(withIdentifier: "showPinDetail", sender: nil)
     }
 }
