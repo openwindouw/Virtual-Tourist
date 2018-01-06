@@ -13,9 +13,9 @@ class FlickrHandler: NSObject {
     
     var session = URLSession.shared
     
-    func request(verb: HTTPMethod = .get, method: String, parameters: VTDictionary? = nil, jsonBody: VTDictionary? = nil, completionHandler: @escaping( _ result: Any?, _ error: NSError?) -> Void) {
+    func request(verb: HTTPMethod = .get, parameters: VTDictionary? = nil, jsonBody: VTDictionary? = nil, completionHandler: @escaping( _ result: Any?, _ error: NSError?) -> Void) {
         
-        let request = NSMutableURLRequest(url: URLFromParameters(parameters, withPathExtension: method))
+        let request = NSMutableURLRequest(url: URLFromParameters(parameters))
         request.httpMethod = verb.method()
         
         
@@ -51,30 +51,34 @@ class FlickrHandler: NSObject {
         task.resume()        
     }
     
-    class func sharedInstance() -> FlickrHandler {
+    class func shared() -> FlickrHandler {
         struct Singleton {
             static var sharedInstance = FlickrHandler()
         }
         return Singleton.sharedInstance
     }
     
-    private func URLFromParameters(_ parameters: VTDictionary?, withPathExtension: String? = nil) -> URL {
+    private func URLFromParameters(_ parameters: VTDictionary?) -> URL {
         
         var components = URLComponents()
         components.scheme = FlickrHandler.Constants.ApiScheme
         components.host = FlickrHandler.Constants.ApiHost
-        components.path = FlickrHandler.Constants.ApiPath + (withPathExtension ?? "")
+        components.path = FlickrHandler.Constants.ApiPath
         components.queryItems = [URLQueryItem]()
         
         if var parameters = parameters {
             
             parameters["api_key"] = FlickrHandler.Constants.ApiKey
+            parameters["safe_search"] = "1"
+            parameters["format"] = "json"
             
             for (key, value) in parameters {
                 let queryItem = URLQueryItem(name: key, value: "\(value)")
                 components.queryItems!.append(queryItem)
             }
         }
+        
+        print(components.url!)
         
         return components.url!
     }
@@ -107,6 +111,6 @@ extension FlickrHandler {
     }
     
     struct Methods {
-        static let SearchPhotos = "/flickr.photos.search"
+        static let SearchPhotos = "flickr.photos.search"
     }
 }

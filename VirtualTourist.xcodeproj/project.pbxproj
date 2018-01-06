@@ -17,6 +17,7 @@
 		CEB05BF81FFDC81200A8B121 /* FlickrHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB05BF71FFDC81200A8B121 /* FlickrHandler.swift */; };
 		CEC25D301FFF053100A34130 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC25D2F1FFF053100A34130 /* PhotoCollectionViewCell.swift */; };
 		CEC25D331FFF0B3A00A34130 /* FlickrLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC25D321FFF0B3A00A34130 /* FlickrLayout.swift */; };
+		CEE2766520006A160089B6BB /* VTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2766420006A160089B6BB /* VTConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		CEB05BF71FFDC81200A8B121 /* FlickrHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrHandler.swift; sourceTree = "<group>"; };
 		CEC25D2F1FFF053100A34130 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEC25D321FFF0B3A00A34130 /* FlickrLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrLayout.swift; sourceTree = "<group>"; };
+		CEE2766420006A160089B6BB /* VTConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				C392B5781FFD5DBB00E62B53 /* Model */,
 				C392B5771FFD5DA900E62B53 /* Controller */,
 				CE1CE22D1FF9790E0022F57B /* AppDelegate.swift */,
+				CEE2766420006A160089B6BB /* VTConstants.swift */,
 				CE1CE2311FF9790E0022F57B /* Main.storyboard */,
 				CE1CE2391FF9790E0022F57B /* Info.plist */,
 				C392B5741FFD5D6B00E62B53 /* Supporting Files */,
@@ -194,6 +197,7 @@
 				CEB05BF81FFDC81200A8B121 /* FlickrHandler.swift in Sources */,
 				CE1CE2301FF9790E0022F57B /* MapViewController.swift in Sources */,
 				C392B57A1FFD722600E62B53 /* PINDetailViewController.swift in Sources */,
+				CEE2766520006A160089B6BB /* VTConstants.swift in Sources */,
 				CEC25D331FFF0B3A00A34130 /* FlickrLayout.swift in Sources */,
 				C392B5761FFD5D9000E62B53 /* Util.swift in Sources */,
 				CE1CE22E1FF9790E0022F57B /* AppDelegate.swift in Sources */,

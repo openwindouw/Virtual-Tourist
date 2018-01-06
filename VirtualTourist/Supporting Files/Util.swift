@@ -63,33 +63,15 @@ class Util {
         }
     }
     
-//    class func createAnnotations(with studentsLocation: [StudentInformation]) -> [MKPointAnnotation]{
-//        var annotations:[MKPointAnnotation] = []
-//
-//        studentsLocation.forEach { student in
-//
-//            if let studentLat = student.latitude, let studentLong = student.longitude {
-//                let lat = CLLocationDegrees(studentLat)
-//                let long = CLLocationDegrees(studentLong)
-//
-//                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//
-//                let first = student.firstName!
-//                let last = student.lastName!
-//                let mediaURL = student.mediaURL!
-//
-//                let annotation = MKPointAnnotation()
-//                annotation.coordinate = coordinate
-//                annotation.title = "\(first) \(last)"
-//                annotation.subtitle = mediaURL
-//
-//                annotations.append(annotation)
-//            }
-//
-//        }
-//
-//        return annotations
-//    }
+    class func getBoundingBox(for latitude: Double, and longitude: Double) -> String {
+        let minLon = max(longitude - VTConstants.Flickr.SearchBBoxHalfWidth, VTConstants.Flickr.SearchLonRange.0)
+        let minLat = max(latitude - VTConstants.Flickr.SearchBBoxHalfHeight, VTConstants.Flickr.SearchLatRange.0)
+        
+        let maxLon = min(longitude + VTConstants.Flickr.SearchBBoxHalfWidth, VTConstants.Flickr.SearchLonRange.1)
+        let maxLat = min(latitude + VTConstants.Flickr.SearchBBoxHalfHeight, VTConstants.Flickr.SearchLatRange.1)
+        
+        return "\(minLon),\(minLat),\(maxLon),\(maxLat)"
+    }
 }
 
 extension UIColor {

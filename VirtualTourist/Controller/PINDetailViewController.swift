@@ -31,6 +31,20 @@ class PINDetailViewController: UIViewController {
         mapView.isUserInteractionEnabled = false
         
         mapView.showAnnotations([selectedAnnotation], animated: true)
+        
+        
+        let parameters: VTDictionary = [
+            "method"  : FlickrHandler.Methods.SearchPhotos,
+            "bbox"    : Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude),
+            "extras"  : "url_m",
+            "nojsoncallback" : "1",
+            "per_page" : "10"
+        ]
+        
+        FlickrHandler.shared().request(parameters: parameters, completionHandler: { data, error in
+            let dictionaryResult = data as! VTDictionary
+            print(dictionaryResult)
+        })
 
     }
     
