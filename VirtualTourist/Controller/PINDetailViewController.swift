@@ -14,6 +14,8 @@ class PINDetailViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     
+    var urls: [String] = []
+    
     var selectedAnnotation: MKAnnotation!
     
     let itemsPerRow: CGFloat = 3
@@ -42,6 +44,17 @@ class PINDetailViewController: UIViewController {
         ]
         
         FlickrHandler.shared().request(parameters: parameters, completionHandler: { data, error in
+            
+            guard error != nil else {
+                Util.showAlert(for: error?.localizedDescription ?? "Empty Description", in: self)
+                return
+            }
+            
+            guard let data = data else {
+                Util.showAlert(for: "No data returned from server.", in: self)
+                return
+            }
+            
             let dictionaryResult = data as! VTDictionary
             print(dictionaryResult)
         })

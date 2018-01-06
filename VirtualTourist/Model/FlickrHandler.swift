@@ -78,8 +78,6 @@ class FlickrHandler: NSObject {
             }
         }
         
-        print(components.url!)
-        
         return components.url!
     }
     
