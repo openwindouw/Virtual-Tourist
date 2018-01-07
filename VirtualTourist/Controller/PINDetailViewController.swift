@@ -14,7 +14,7 @@ class PINDetailViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     
-    var urls: [String] = []
+    var photos: [FlickrPhoto] = []
     
     var selectedAnnotation: MKAnnotation!
     
@@ -32,33 +32,10 @@ class PINDetailViewController: UIViewController {
         mapView.isScrollEnabled = false
         mapView.isUserInteractionEnabled = false
         
-        mapView.showAnnotations([selectedAnnotation], animated: true)
-        
-        
-        let parameters: VTDictionary = [
-            "method"  : FlickrHandler.Methods.SearchPhotos,
-            "bbox"    : Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude),
-            "extras"  : "url_m",
-            "nojsoncallback" : "1",
-            "per_page" : "10"
-        ]
-        
-        FlickrHandler.shared().request(parameters: parameters, completionHandler: { data, error in
-            
-            guard error != nil else {
-                Util.showAlert(for: error?.localizedDescription ?? "Empty Description", in: self)
-                return
-            }
-            
-            guard let data = data else {
-                Util.showAlert(for: "No data returned from server.", in: self)
-                return
-            }
-            
-            let dictionaryResult = data as! VTDictionary
-            print(dictionaryResult)
-        })
-
+        performUIUpdatesOnMain {
+            self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
+        }
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -69,12 +46,18 @@ class PINDetailViewController: UIViewController {
 
 extension PINDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
-        cell.showActivityIndicator()
+        
+        cell.photoImageView.image = nil
+        
+        if let link = photos[indexPath.row].url { 
+            cell.configure(with: link)
+        }
+        
         return cell
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
+    var photoImage: UIImage?
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
@@ -25,6 +26,20 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         
     }
     
+    func configure(with link: String) {
+        if let image = photoImage {
+            photoImageView.image = image
+        } else {
+            showActivityIndicator()
+            
+            photoImageView.downloadedFrom(link: link) { image in
+                self.photoImage = image
+                self.hideActivityIndicator()
+            }
+        }
+
+    }
+    
     func showActivityIndicator() {
         activityView.startAnimating()
     }
@@ -32,5 +47,4 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     func hideActivityIndicator() {
         activityView.stopAnimating()
     }
-    
 }

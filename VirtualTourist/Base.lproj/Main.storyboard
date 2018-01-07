@@ -68,7 +68,7 @@
         <!--Detail View Controller-->
         <scene sceneID="xwA-Rp-5w1">
             <objects>
-                <viewController id="RNg-aX-yZ7" customClass="PINDetailViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PinDetailViewControllerID" id="RNg-aX-yZ7" customClass="PINDetailViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dcb-Ih-x5z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
