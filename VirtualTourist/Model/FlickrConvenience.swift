@@ -11,13 +11,15 @@ import UIKit
 extension FlickrHandler {
     func getPhotos(with boundingBox: String, in viewController: CustomViewController, onCompletion: @escaping ([FlickrPhoto]) -> Void) {
         
+        let randomPage = min(Int(arc4random_uniform(UInt32(VTConstants.Flickr.MaxPage))) + 1, VTConstants.Flickr.MaxPage)
+        
         let parameters: VTDictionary = [
             "method"  : FlickrHandler.Methods.SearchPhotos,
             "bbox"    : boundingBox,
             "extras"  : "url_m",
             "nojsoncallback" : "1",
-            "per_page" : "50",
-            "page"  : "5"
+            "per_page" : "\(VTConstants.Flickr.MaxPhotos)",
+            "page"  : "\(randomPage)"
         ]
         
         viewController.showActivityIndicatory()

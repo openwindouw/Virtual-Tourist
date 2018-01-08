@@ -83,7 +83,7 @@
                                 </connections>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Gn-Fg-fpV">
-                                <rect key="frame" x="0.0" y="203" width="375" height="464"/>
+                                <rect key="frame" x="0.0" y="203" width="375" height="420"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NDl-wh-gFF" customClass="FlickrLayout" customModule="VirtualTourist" customModuleProvider="target">
                                     <size key="itemSize" width="131" height="109"/>
@@ -124,22 +124,37 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lya-pR-TTi">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TqG-yv-2sY"/>
+                                </constraints>
+                                <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="newCollectionButtonOnTap:" destination="RNg-aX-yZ7" eventType="touchUpInside" id="Qmk-oL-zgG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gLS-41-GYH" firstAttribute="bottom" secondItem="Lya-pR-TTi" secondAttribute="bottom" id="7Om-V9-RcY"/>
+                            <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="Lya-pR-TTi" secondAttribute="trailing" id="CRt-F9-3hT"/>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="1Gn-Fg-fpV" secondAttribute="trailing" id="MAR-RQ-kov"/>
+                            <constraint firstItem="Lya-pR-TTi" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="NCf-S1-ffy"/>
                             <constraint firstItem="UrU-io-zFD" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="R8i-Iv-TtJ"/>
                             <constraint firstItem="1Gn-Fg-fpV" firstAttribute="top" secondItem="UrU-io-zFD" secondAttribute="bottom" constant="-1" id="U4D-oY-7xF"/>
-                            <constraint firstItem="gLS-41-GYH" firstAttribute="bottom" secondItem="1Gn-Fg-fpV" secondAttribute="bottom" id="UDg-gM-rYu"/>
                             <constraint firstItem="1Gn-Fg-fpV" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="iW3-Ig-bKf"/>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="UrU-io-zFD" secondAttribute="trailing" id="nzX-Ot-7dH"/>
                             <constraint firstItem="UrU-io-zFD" firstAttribute="top" secondItem="gLS-41-GYH" secondAttribute="top" id="p3h-wN-k2f"/>
+                            <constraint firstItem="Lya-pR-TTi" firstAttribute="top" secondItem="1Gn-Fg-fpV" secondAttribute="bottom" id="wMM-1l-w1S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gLS-41-GYH"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="1Gn-Fg-fpV" id="pJ5-Xk-kpx"/>
                         <outlet property="mapView" destination="UrU-io-zFD" id="7DD-F2-SRR"/>
+                        <outlet property="newCollectionButton" destination="Lya-pR-TTi" id="68Z-OX-1Gd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H0W-vn-A8m" userLabel="First Responder" sceneMemberID="firstResponder"/>

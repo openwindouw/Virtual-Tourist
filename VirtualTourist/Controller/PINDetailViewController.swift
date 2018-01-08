@@ -9,12 +9,14 @@
 import UIKit
 import MapKit
 
-class PINDetailViewController: UIViewController {
+class PINDetailViewController: CustomViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var newCollectionButton: UIButton!
     
     var photos: [FlickrPhoto] = []
+    var bbox: String!
     
     var selectedAnnotation: MKAnnotation!
     
@@ -26,12 +28,16 @@ class PINDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         
         mapView.isZoomEnabled = false
         mapView.isScrollEnabled = false
         mapView.isUserInteractionEnabled = false
+        
+        newCollectionButton.isEnabled = false
         
         performUIUpdatesOnMain {
             self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
@@ -43,6 +49,14 @@ class PINDetailViewController: UIViewController {
         super.viewDidLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
     }
+    
+    @IBAction func newCollectionButtonOnTap(_ sender: Any) {
+        FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
+            self.photos = photos
+            self.collectionView.reloadData()
+        })
+    }
+    
 }
 
 extension PINDetailViewController: UICollectionViewDataSource {
@@ -68,6 +82,8 @@ extension PINDetailViewController: UICollectionViewDataSource {
                 if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
                     visibleCell.photoImageView.image = image
                 }
+                
+                self.newCollectionButton.isEnabled = indexPath.row == (self.photos.count - 1)
                 
             }
         }

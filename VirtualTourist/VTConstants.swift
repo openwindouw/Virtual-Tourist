@@ -14,6 +14,8 @@ struct VTConstants {
         static let SearchBBoxHalfHeight = 1.0
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
+        static let MaxPhotos = 30
+        static let MaxPage = 40
     }
     
     struct Metrics {

@@ -33,4 +33,10 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         activityView.stopAnimating()
         activityView.isHidden = true
     }
+    
+    override func prepareForReuse() {
+        photoImageView.image = nil
+        activityView.isHidden = false
+        super.prepareForReuse()
+    }
 }
