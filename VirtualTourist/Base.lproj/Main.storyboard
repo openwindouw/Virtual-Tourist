@@ -19,31 +19,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXk-BN-nD3">
-                                <rect key="frame" x="0.0" y="64" width="375" height="545"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="543"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="4oa-42-uY6"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2VE-m4-NuE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fh-XN-sNY">
                                 <rect key="frame" x="0.0" y="607" width="375" height="60"/>
-                                <color key="backgroundColor" red="1" green="0.088482877475749677" blue="0.083598074279161327" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.20729341023488035" blue="0.10831148155691761" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="fN4-Su-ITK"/>
+                                    <constraint firstAttribute="height" constant="60" id="xQm-Qg-FEW"/>
                                 </constraints>
-                                <state key="normal" title="Tap Pins to Delete">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                            </button>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="IXk-BN-nD3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4UD-et-mSV"/>
-                            <constraint firstItem="2VE-m4-NuE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LdX-bw-tYA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2VE-m4-NuE" secondAttribute="bottom" id="UVv-Om-XHH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2VE-m4-NuE" secondAttribute="trailing" id="VBM-wc-NCJ"/>
-                            <constraint firstItem="2VE-m4-NuE" firstAttribute="top" secondItem="IXk-BN-nD3" secondAttribute="bottom" constant="-2" id="phH-e8-NXM"/>
+                            <constraint firstItem="1fh-XN-sNY" firstAttribute="top" secondItem="IXk-BN-nD3" secondAttribute="bottom" id="8bS-K3-5W5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1fh-XN-sNY" secondAttribute="bottom" id="pJO-w1-SEe"/>
+                            <constraint firstItem="1fh-XN-sNY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pTq-gj-l9h"/>
                             <constraint firstItem="IXk-BN-nD3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vEP-7f-tvI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="IXk-BN-nD3" secondAttribute="trailing" id="yDo-Fx-RPD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1fh-XN-sNY" secondAttribute="trailing" id="yd9-Zd-c2e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -56,7 +56,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="buttonHeightConstraint" destination="fN4-Su-ITK" id="eVu-Zb-Nf6"/>
+                        <outlet property="buttonHeightConstraint" destination="xQm-Qg-FEW" id="Q5E-y0-Mtt"/>
                         <outlet property="mapView" destination="IXk-BN-nD3" id="c5T-ib-Af9"/>
                         <segue destination="RNg-aX-yZ7" kind="show" identifier="showPinDetail" id="Den-4z-mmj"/>
                     </connections>

@@ -70,26 +70,31 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        
+
         selectedAnnotation = view.annotation
         
         mapView.deselectAnnotation(view.annotation, animated: true)
+        
+        let bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
         
         let performToDetailViewController: (MKAnnotation, [FlickrPhoto]) -> Void = {  annotation, photos in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let pinDetailViewController = storyboard.instantiateViewController(withIdentifier: "PinDetailViewControllerID") as! PINDetailViewController
             pinDetailViewController.selectedAnnotation = annotation
             pinDetailViewController.photos = photos
+            pinDetailViewController.bbox = bbox
             
             self.navigationController?.pushViewController(pinDetailViewController, animated: true)
             
         }
         
-        let bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
-        
         FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
             performToDetailViewController(self.selectedAnnotation, photos)
         })
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        print(userLocation.location!.coordinate)
     }
 }
 

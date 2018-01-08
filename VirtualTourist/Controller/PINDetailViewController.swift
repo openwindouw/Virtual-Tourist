@@ -18,6 +18,8 @@ class PINDetailViewController: CustomViewController {
     var photos: [FlickrPhoto] = []
     var bbox: String!
     
+    var maxPhotos: Int!
+    
     var selectedAnnotation: MKAnnotation!
     
     let itemsPerRow: CGFloat = 3
@@ -28,8 +30,6 @@ class PINDetailViewController: CustomViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
-        
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -38,6 +38,8 @@ class PINDetailViewController: CustomViewController {
         mapView.isUserInteractionEnabled = false
         
         newCollectionButton.isEnabled = false
+        
+        maxPhotos = min(photos.count, VTConstants.Flickr.MaxPhotos)
         
         performUIUpdatesOnMain {
             self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
@@ -83,7 +85,7 @@ extension PINDetailViewController: UICollectionViewDataSource {
                     visibleCell.photoImageView.image = image
                 }
                 
-                self.newCollectionButton.isEnabled = indexPath.row == (self.photos.count - 1)
+                self.enableNewCollectionButton(with: indexPath)
                 
             }
         }
@@ -116,6 +118,15 @@ extension PINDetailViewController: MKMapViewDelegate {
         }
         
         return pinView
+    }
+}
+
+extension PINDetailViewController {
+    //MARK: Helpers
+    func enableNewCollectionButton(with indexPath: IndexPath) {
+        if indexPath.row == (maxPhotos - 1) {
+            self.newCollectionButton.isEnabled = true
+        }
     }
 }
 
