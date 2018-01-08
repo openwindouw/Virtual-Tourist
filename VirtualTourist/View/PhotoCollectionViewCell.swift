@@ -10,8 +10,6 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
-    var photoImage: UIImage?
-    
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     
@@ -22,22 +20,9 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         contentView.layoutIfNeeded()
         
         photoImageView.contentMode = .scaleAspectFit
-        photoImageView.backgroundColor = UIColor.darkGray
+        photoImageView.backgroundColor = UIColor.lightGray
+        photoImageView.layer.cornerRadius = VTConstants.Metrics.CornerRadius
         
-    }
-    
-    func configure(with link: String) {
-        if let image = photoImage {
-            photoImageView.image = image
-        } else {
-            showActivityIndicator()
-            
-            photoImageView.downloadedFrom(link: link) { image in
-                self.photoImage = image
-                self.hideActivityIndicator()
-            }
-        }
-
     }
     
     func showActivityIndicator() {
@@ -46,5 +31,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
 
     func hideActivityIndicator() {
         activityView.stopAnimating()
+        activityView.isHidden = true
     }
 }

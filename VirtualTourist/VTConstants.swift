@@ -15,4 +15,8 @@ struct VTConstants {
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
     }
+    
+    struct Metrics {
+        static let CornerRadius: CGFloat = 6
+    }
 }

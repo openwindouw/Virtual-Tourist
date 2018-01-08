@@ -27,6 +27,7 @@ class PINDetailViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         mapView.isZoomEnabled = false
         mapView.isScrollEnabled = false
@@ -51,14 +52,35 @@ extension PINDetailViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
+
+        let photo = photos[indexPath.row]
         
-        cell.photoImageView.image = nil
-        
-        if let link = photos[indexPath.row].url { 
-            cell.configure(with: link)
+        if let image = photo.image {
+            cell.photoImageView.image = image
+        } else if let link = photo.url {
+            cell.showActivityIndicator()
+            
+            Util.downloadImageFrom(link: link) { image in
+                cell.hideActivityIndicator()
+                
+                self.photos[indexPath.row].image = image
+                
+                if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
+                    visibleCell.photoImageView.image = image
+                }
+                
+            }
         }
         
         return cell
+    }
+}
+
+extension PINDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        photos.remove(at: indexPath.row)
+        collectionView.deleteItems(at: [indexPath])
+        collectionView.reloadData()
     }
 }
 

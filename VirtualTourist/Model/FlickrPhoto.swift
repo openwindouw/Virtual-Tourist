@@ -10,6 +10,7 @@ import UIKit
 
 struct FlickrPhoto {
     var url: String?
+    var image: UIImage?
     
     init(with dictionary: VTDictionary) {
         url = dictionary["url_m"] as? String
