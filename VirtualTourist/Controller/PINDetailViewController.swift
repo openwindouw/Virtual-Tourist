@@ -14,6 +14,7 @@ class PINDetailViewController: CustomViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var newCollectionButton: UIButton!
+    @IBOutlet weak var emptyCollectionCover: UIView!
     
     var photos: [FlickrPhoto] = []
     var bbox: String!
@@ -41,8 +42,14 @@ class PINDetailViewController: CustomViewController {
         
         maxPhotos = min(photos.count, VTConstants.Flickr.MaxPhotos)
         
+        emptyCollectionCover.isHidden = true
+        
         performUIUpdatesOnMain {
             self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
+        }
+        
+        if photos.isEmpty {
+            setupEmptyCollection()
         }
        
     }
@@ -54,8 +61,14 @@ class PINDetailViewController: CustomViewController {
     
     @IBAction func newCollectionButtonOnTap(_ sender: Any) {
         FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
-            self.photos = photos
-            self.collectionView.reloadData()
+            
+            if photos.isEmpty {
+                self.setupEmptyCollection()
+            } else {
+                self.photos = photos
+                self.collectionView.reloadData()
+            }
+        
         })
     }
     
@@ -127,6 +140,12 @@ extension PINDetailViewController {
         if indexPath.row == (maxPhotos - 1) {
             self.newCollectionButton.isEnabled = true
         }
+    }
+    
+    func setupEmptyCollection() {
+        self.collectionView.isHidden = true
+        self.emptyCollectionCover.isHidden = false
+        self.newCollectionButton.isEnabled = false
     }
 }
 

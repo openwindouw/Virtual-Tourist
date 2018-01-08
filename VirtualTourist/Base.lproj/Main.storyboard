@@ -82,6 +82,22 @@
                                     <outlet property="delegate" destination="RNg-aX-yZ7" id="Jjl-LV-hgL"/>
                                 </connections>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiD-py-hgz">
+                                <rect key="frame" x="0.0" y="203" width="375" height="420"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JsG-dE-piD">
+                                        <rect key="frame" x="146" y="199" width="82" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="JsG-dE-piD" firstAttribute="centerX" secondItem="UiD-py-hgz" secondAttribute="centerX" id="NA7-7K-BD5"/>
+                                    <constraint firstItem="JsG-dE-piD" firstAttribute="centerY" secondItem="UiD-py-hgz" secondAttribute="centerY" id="wR2-qM-IyJ"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Gn-Fg-fpV">
                                 <rect key="frame" x="0.0" y="203" width="375" height="420"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -139,20 +155,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="bottom" secondItem="Lya-pR-TTi" secondAttribute="bottom" id="7Om-V9-RcY"/>
+                            <constraint firstItem="UiD-py-hgz" firstAttribute="top" secondItem="1Gn-Fg-fpV" secondAttribute="top" id="AMQ-XR-2uD"/>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="Lya-pR-TTi" secondAttribute="trailing" id="CRt-F9-3hT"/>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="1Gn-Fg-fpV" secondAttribute="trailing" id="MAR-RQ-kov"/>
                             <constraint firstItem="Lya-pR-TTi" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="NCf-S1-ffy"/>
                             <constraint firstItem="UrU-io-zFD" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="R8i-Iv-TtJ"/>
                             <constraint firstItem="1Gn-Fg-fpV" firstAttribute="top" secondItem="UrU-io-zFD" secondAttribute="bottom" constant="-1" id="U4D-oY-7xF"/>
                             <constraint firstItem="1Gn-Fg-fpV" firstAttribute="leading" secondItem="gLS-41-GYH" secondAttribute="leading" id="iW3-Ig-bKf"/>
+                            <constraint firstItem="UiD-py-hgz" firstAttribute="bottom" secondItem="1Gn-Fg-fpV" secondAttribute="bottom" id="jnm-WO-0Oi"/>
+                            <constraint firstItem="UiD-py-hgz" firstAttribute="leading" secondItem="1Gn-Fg-fpV" secondAttribute="leading" id="kRa-Ya-s0Q"/>
                             <constraint firstItem="gLS-41-GYH" firstAttribute="trailing" secondItem="UrU-io-zFD" secondAttribute="trailing" id="nzX-Ot-7dH"/>
                             <constraint firstItem="UrU-io-zFD" firstAttribute="top" secondItem="gLS-41-GYH" secondAttribute="top" id="p3h-wN-k2f"/>
+                            <constraint firstItem="UiD-py-hgz" firstAttribute="trailing" secondItem="1Gn-Fg-fpV" secondAttribute="trailing" id="vu3-n0-l2z"/>
                             <constraint firstItem="Lya-pR-TTi" firstAttribute="top" secondItem="1Gn-Fg-fpV" secondAttribute="bottom" id="wMM-1l-w1S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gLS-41-GYH"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="1Gn-Fg-fpV" id="pJ5-Xk-kpx"/>
+                        <outlet property="emptyCollectionCover" destination="UiD-py-hgz" id="lGx-hO-uU5"/>
                         <outlet property="mapView" destination="UrU-io-zFD" id="7DD-F2-SRR"/>
                         <outlet property="newCollectionButton" destination="Lya-pR-TTi" id="68Z-OX-1Gd"/>
                     </connections>
