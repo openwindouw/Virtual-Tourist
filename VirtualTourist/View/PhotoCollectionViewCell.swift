@@ -37,7 +37,6 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         photoImageView.image = nil
-//        activityView.isHidden = false
         super.prepareForReuse()
     }
 }

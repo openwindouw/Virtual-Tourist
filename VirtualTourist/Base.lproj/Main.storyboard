@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3O1-FE-OSb">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,17 +11,17 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXk-BN-nD3">
-                                <rect key="frame" x="0.0" y="64" width="375" height="543"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="476"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="4oa-42-uY6"/>
                                 </connections>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Pins to Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fh-XN-sNY">
-                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                                 <color key="backgroundColor" red="1" green="0.20729341023488035" blue="0.10831148155691761" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="xQm-Qg-FEW"/>
@@ -70,11 +66,11 @@
             <objects>
                 <viewController storyboardIdentifier="PinDetailViewControllerID" id="RNg-aX-yZ7" customClass="PINDetailViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dcb-Ih-x5z">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UrU-io-zFD">
-                                <rect key="frame" x="0.0" y="64" width="375" height="140"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="140"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="140" id="5g2-0k-1dC"/>
                                 </constraints>
@@ -83,10 +79,10 @@
                                 </connections>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UiD-py-hgz">
-                                <rect key="frame" x="0.0" y="203" width="375" height="420"/>
+                                <rect key="frame" x="0.0" y="203" width="600" height="353"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JsG-dE-piD">
-                                        <rect key="frame" x="146" y="199" width="82" height="21"/>
+                                        <rect key="frame" x="258.5" y="165.5" width="82" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -99,7 +95,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Gn-Fg-fpV">
-                                <rect key="frame" x="0.0" y="203" width="375" height="420"/>
+                                <rect key="frame" x="0.0" y="203" width="600" height="353"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NDl-wh-gFF" customClass="FlickrLayout" customModule="VirtualTourist" customModuleProvider="target">
                                     <size key="itemSize" width="131" height="109"/>
@@ -141,14 +137,14 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lya-pR-TTi">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="TqG-yv-2sY"/>
                                 </constraints>
                                 <state key="normal" title="New Collection"/>
                                 <connections>
-                                    <action selector="newCollectionButtonOnTap:" destination="RNg-aX-yZ7" eventType="touchUpInside" id="Qmk-oL-zgG"/>
+                                    <action selector="actionButtonOnTap:" destination="RNg-aX-yZ7" eventType="touchUpInside" id="Qmk-oL-zgG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -172,10 +168,10 @@
                         <viewLayoutGuide key="safeArea" id="gLS-41-GYH"/>
                     </view>
                     <connections>
+                        <outlet property="actionButton" destination="Lya-pR-TTi" id="68Z-OX-1Gd"/>
                         <outlet property="collectionView" destination="1Gn-Fg-fpV" id="pJ5-Xk-kpx"/>
                         <outlet property="emptyCollectionCover" destination="UiD-py-hgz" id="lGx-hO-uU5"/>
                         <outlet property="mapView" destination="UrU-io-zFD" id="7DD-F2-SRR"/>
-                        <outlet property="newCollectionButton" destination="Lya-pR-TTi" id="68Z-OX-1Gd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H0W-vn-A8m" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -38,3 +38,9 @@ extension FlickrPhoto {
         return photosFromResults(photoArray)
     }
 }
+
+extension FlickrPhoto: Equatable {}
+
+func ==(lhs: FlickrPhoto, rhs: FlickrPhoto) -> Bool {
+    return lhs.url == rhs.url
+}

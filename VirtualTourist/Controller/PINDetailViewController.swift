@@ -9,16 +9,28 @@
 import UIKit
 import MapKit
 
+enum PhotoAction {
+    case get, delete
+}
+
 class PINDetailViewController: CustomViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var newCollectionButton: UIButton!
+    @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var emptyCollectionCover: UIView!
     
     var photos: [FlickrPhoto] = []
-    var bbox: String!
+    var selectedPhotos: [FlickrPhoto] = []
     
+    
+    var currentAction: PhotoAction! {
+        didSet {
+//            actionButton.setTitle(oldValue == .get ? "New Collection" : "Delete selected photos", for: .normal)
+        }
+    }
+    
+    var bbox: String!
     var maxPhotos: Int!
     
     var selectedAnnotation: MKAnnotation!
@@ -34,22 +46,28 @@ class PINDetailViewController: CustomViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        //setup mapView
         mapView.isZoomEnabled = false
         mapView.isScrollEnabled = false
         mapView.isUserInteractionEnabled = false
         
-        newCollectionButton.isEnabled = false
+        actionButton.isEnabled = false
         
+        //set max photos number
         maxPhotos = min(photos.count, VTConstants.Flickr.MaxPhotos)
         
         emptyCollectionCover.isHidden = true
         
-        performUIUpdatesOnMain {
-            self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
-        }
-        
+        //show empty cover if photos array is empty
         if photos.isEmpty {
             setupEmptyCollection()
+        }
+        
+        currentAction = .get
+        
+        //show selectedAnnotation
+        performUIUpdatesOnMain {
+            self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
         }
        
     }
@@ -59,17 +77,32 @@ class PINDetailViewController: CustomViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    @IBAction func newCollectionButtonOnTap(_ sender: Any) {
-        FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
+    @IBAction func actionButtonOnTap(_ sender: Any) {
+        if currentAction == .get {
+            FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
+                
+                if photos.isEmpty {
+                    self.setupEmptyCollection()
+                } else {
+                    self.photos = photos
+                    self.collectionView.reloadData()
+                }
+                
+            })
+        } else {
             
-            if photos.isEmpty {
-                self.setupEmptyCollection()
-            } else {
-                self.photos = photos
-                self.collectionView.reloadData()
+            print("before deleted: \(photos.count)")
+            
+            photos = photos.filter { photo in
+                return selectedPhotos.first(where: { selectedPhoto in
+                    return selectedPhoto == photo
+                }) != nil
             }
-        
-        })
+            
+            print("after deleted: \(photos.count)")
+            
+            collectionView.reloadData()
+        }
     }
     
 }
@@ -95,7 +128,11 @@ extension PINDetailViewController: UICollectionViewDataSource {
                 self.photos[indexPath.row].image = image
                 
                 if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
-                    visibleCell.photoImageView.image = image
+                    
+                    performUIUpdatesOnMain {
+                        visibleCell.photoImageView.image = image
+                    }
+                    
                 }
                 
                 self.enableNewCollectionButton(with: indexPath)
@@ -109,9 +146,21 @@ extension PINDetailViewController: UICollectionViewDataSource {
 
 extension PINDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        photos.remove(at: indexPath.row)
-        collectionView.deleteItems(at: [indexPath])
-        collectionView.reloadData()
+
+        let photo = photoFor(indexPath)
+        
+        selectedPhotos.append(photo)
+        
+//        collectionView.deleteItems(at: [indexPath])
+//        collectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let photo = photoFor(indexPath)
+        
+        if let index = selectedPhotos.index(of: photo) {
+            selectedPhotos.remove(at: index)
+        }
     }
 }
 
@@ -138,14 +187,18 @@ extension PINDetailViewController {
     //MARK: Helpers
     func enableNewCollectionButton(with indexPath: IndexPath) {
         if indexPath.row == (maxPhotos - 1) {
-            self.newCollectionButton.isEnabled = true
+            self.actionButton.isEnabled = true
         }
     }
     
     func setupEmptyCollection() {
         self.collectionView.isHidden = true
         self.emptyCollectionCover.isHidden = false
-        self.newCollectionButton.isEnabled = false
+        self.actionButton.isEnabled = false
+    }
+    
+    func photoFor(_ indexPath: IndexPath) -> FlickrPhoto {
+        return selectedPhotos[indexPath.row]
     }
 }
 

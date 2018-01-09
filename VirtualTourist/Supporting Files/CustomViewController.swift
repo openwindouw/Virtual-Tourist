@@ -25,6 +25,12 @@ class CustomViewController: UIViewController {
         view.addSubview(activityIndicator)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+    }
+    
     func showActivityIndicatory() {
         
         performUIUpdatesOnMain {
