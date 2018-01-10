@@ -12,6 +12,14 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
+    let selectedAlpha: CGFloat = 0.5
+    let deselectedAlpha: CGFloat = 1
+    
+    override var isSelected: Bool {
+        didSet {
+            photoImageView.alpha = isSelected ? selectedAlpha : deselectedAlpha
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
