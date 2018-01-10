@@ -24,12 +24,7 @@ class PINDetailViewController: CustomViewController {
     var selectedPhotos: [FlickrPhoto] = []
     
     
-    var currentAction: PhotoAction! {
-        didSet {
-//            actionButton.setTitle(oldValue == .get ? "New Collection" : "Delete selected photos", for: .normal)
-        }
-    }
-    
+    var currentAction: PhotoAction! = .get
     var bbox: String!
     var maxPhotos: Int!
     
@@ -45,6 +40,7 @@ class PINDetailViewController: CustomViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
         
         //setup mapView
         mapView.isZoomEnabled = false
@@ -62,8 +58,6 @@ class PINDetailViewController: CustomViewController {
         if photos.isEmpty {
             setupEmptyCollection()
         }
-        
-        currentAction = .get
         
         //show selectedAnnotation
         performUIUpdatesOnMain {
@@ -96,11 +90,12 @@ class PINDetailViewController: CustomViewController {
             photos = photos.filter { photo in
                 return selectedPhotos.first(where: { selectedPhoto in
                     return selectedPhoto == photo
-                }) != nil
+                }) == nil
             }
             
             print("after deleted: \(photos.count)")
             
+            setupForNewCollection()
             collectionView.reloadData()
         }
     }
@@ -146,20 +141,17 @@ extension PINDetailViewController: UICollectionViewDataSource {
 
 extension PINDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        let photo = photoFor(indexPath)
-        
-        selectedPhotos.append(photo)
-        
-//        collectionView.deleteItems(at: [indexPath])
-//        collectionView.reloadData()
+        selectedPhotos.append(photoFor(indexPath))
+        setupForDeleteSelectedPhotos()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let photo = photoFor(indexPath)
-        
-        if let index = selectedPhotos.index(of: photo) {
+        if let index = selectedPhotos.index(of: photoFor(indexPath)) {
             selectedPhotos.remove(at: index)
+        }
+        
+        if selectedPhotos.isEmpty {
+            setupForNewCollection()
         }
     }
 }
@@ -197,8 +189,18 @@ extension PINDetailViewController {
         self.actionButton.isEnabled = false
     }
     
+    func setupForNewCollection() {
+        actionButton.setTitle("New Collection", for: .normal)
+        currentAction = .get
+    }
+    
+    func setupForDeleteSelectedPhotos() {
+        actionButton.setTitle("Delete Photos", for: .normal)
+        currentAction = .delete
+    }
+    
     func photoFor(_ indexPath: IndexPath) -> FlickrPhoto {
-        return selectedPhotos[indexPath.row]
+        return photos[indexPath.row]
     }
 }
 
