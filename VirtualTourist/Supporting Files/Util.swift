@@ -133,3 +133,11 @@ extension UIImageView {
         downloadedFrom(url: url, contentMode: mode, callback: callback)
     }
 }
+
+//from https://stackoverflow.com/a/43851223/5903087
+extension UIBarButtonItem {
+    convenience init(barButtonSystemItem systemItem: UIBarButtonSystemItem, targetViewController: UIViewController?, action: Selector?) {
+        // call the initializer provided by UIKit
+        self.init(barButtonSystemItem: systemItem, target: targetViewController, action: action)
+    }
+}

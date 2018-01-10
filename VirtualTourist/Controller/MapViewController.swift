@@ -9,9 +9,17 @@
 import UIKit
 import MapKit
 
+enum EditState {
+    case editing, normal
+}
+
 class MapViewController: CustomViewController {
     @IBOutlet weak var buttonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
+    
+//    var barButtonItem: UIBarButtonItem!
+    
+    var currentEditState: EditState! = .editing
     
     var selectedAnnotation: MKAnnotation!
     
@@ -22,14 +30,27 @@ class MapViewController: CustomViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buttonHeightConstraint.constant = 0
+        
+        
+//        barButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, targetViewController: self, action: #selector(MapViewController.editButtonOnTap))
+        
+        buttonHeightConstraint.constant = .leastNormalMagnitude
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
 
-    @IBAction func showPinDetailOnTap(_ sender: Any) {
-        self.buttonHeightConstraint.constant = self.buttonHeigh
+    @objc func editButtonOnTap() {
+        if currentEditState == .normal {
+            
+            buttonHeightConstraint.constant = buttonHeigh
+            currentEditState = .editing
+        } else {
+            
+            buttonHeightConstraint.constant = .leastNormalMagnitude
+            currentEditState = .normal
+        }
+        
     }
     
     @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
