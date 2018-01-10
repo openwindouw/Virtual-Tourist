@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IXk-BN-nD3">
-                                <rect key="frame" x="0.0" y="64" width="375" height="543"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="4oa-42-uY6"/>
                                 </connections>
@@ -38,7 +38,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="IXk-BN-nD3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4UD-et-mSV"/>
-                            <constraint firstItem="1fh-XN-sNY" firstAttribute="top" secondItem="IXk-BN-nD3" secondAttribute="bottom" id="8bS-K3-5W5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IXk-BN-nD3" secondAttribute="bottom" id="HHz-WE-AvA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1fh-XN-sNY" secondAttribute="bottom" id="pJO-w1-SEe"/>
                             <constraint firstItem="1fh-XN-sNY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pTq-gj-l9h"/>
                             <constraint firstItem="IXk-BN-nD3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vEP-7f-tvI"/>
@@ -49,9 +49,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="UP3-qc-wf7">
                         <barButtonItem key="backBarButtonItem" title="OK" id="X96-ZI-Oo9"/>
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="s9Z-UK-Chg">
+                            <connections>
+                                <action selector="editButtonOnTap:" destination="BYZ-38-t0r" id="cUA-xu-owB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonHeightConstraint" destination="xQm-Qg-FEW" id="Q5E-y0-Mtt"/>
+                        <outlet property="editButton" destination="s9Z-UK-Chg" id="1k4-GN-AdZ"/>
                         <outlet property="mapView" destination="IXk-BN-nD3" id="c5T-ib-Af9"/>
                         <segue destination="RNg-aX-yZ7" kind="show" identifier="showPinDetail" id="Den-4z-mmj"/>
                     </connections>

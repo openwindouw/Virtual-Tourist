@@ -95,6 +95,11 @@ class PINDetailViewController: CustomViewController {
             
             print("after deleted: \(photos.count)")
             
+            
+            if photos.isEmpty {
+                setupEmptyCollection(enable: true)
+            }
+            
             setupForNewCollection()
             collectionView.reloadData()
         }
@@ -183,10 +188,10 @@ extension PINDetailViewController {
         }
     }
     
-    func setupEmptyCollection() {
+    func setupEmptyCollection(enable actionIsEnabled: Bool = false) {
         self.collectionView.isHidden = true
         self.emptyCollectionCover.isHidden = false
-        self.actionButton.isEnabled = false
+        self.actionButton.isEnabled = actionIsEnabled
     }
     
     func setupForNewCollection() {

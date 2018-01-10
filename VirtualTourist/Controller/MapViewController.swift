@@ -16,41 +16,34 @@ enum EditState {
 class MapViewController: CustomViewController {
     @IBOutlet weak var buttonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
-//    var barButtonItem: UIBarButtonItem!
-    
-    var currentEditState: EditState! = .editing
+    var currentEditState: EditState! = .normal
     
     var selectedAnnotation: MKAnnotation!
-    
     let buttonHeigh: CGFloat = 40
-    
     var annotations: [MKPointAnnotation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-//        barButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, targetViewController: self, action: #selector(MapViewController.editButtonOnTap))
-        
+
         buttonHeightConstraint.constant = .leastNormalMagnitude
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
-
-    @objc func editButtonOnTap() {
+    
+    @IBAction func editButtonOnTap(_ sender: Any) {
         if currentEditState == .normal {
-            
+            editButton.title = "Done"
             buttonHeightConstraint.constant = buttonHeigh
             currentEditState = .editing
         } else {
-            
+            editButton.title = "Edit"
             buttonHeightConstraint.constant = .leastNormalMagnitude
             currentEditState = .normal
         }
-        
+
     }
     
     @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
