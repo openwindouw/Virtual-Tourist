@@ -80,6 +80,7 @@ class PINDetailViewController: CustomViewController {
                 } else {
                     self.photos = photos
                     self.collectionView.reloadData()
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                 }
                 
             })

@@ -47,7 +47,9 @@ class MapViewController: CustomViewController {
     }
     
     @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
-        if sender.state != UIGestureRecognizerState.began { return }
+        
+        guard currentEditState == .normal else { return }
+        guard sender.state == UIGestureRecognizerState.began else { return }
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
         
@@ -87,7 +89,17 @@ extension MapViewController: MKMapViewDelegate {
         
         
         if currentEditState == .editing {
-//            mapView.removeAnnotation(view.annotation!).
+            
+            if let currentAnnotation = view.annotation, let currentPointAnnotationIndex = annotations.index (where: {
+                return $0.coordinate.latitude == currentAnnotation.coordinate.latitude && $0.coordinate.longitude == currentAnnotation.coordinate.longitude
+            }) {
+                annotations.remove(at: currentPointAnnotationIndex)
+                
+                performUIUpdatesOnMain {
+                    mapView.removeAnnotation(currentAnnotation)
+                }
+            }
+            
         } else {
             selectedAnnotation = view.annotation
             
