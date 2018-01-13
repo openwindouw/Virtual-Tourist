@@ -21,4 +21,10 @@ struct VTConstants {
     struct Metrics {
         static let CornerRadius: CGFloat = 6
     }
+    
+    struct UserDefaultsKeys {
+        static let centerLatitude = "centerLatitude"
+        static let centerLongitude = "centerLongitude"
+        static let region = "region"
+    }
 }

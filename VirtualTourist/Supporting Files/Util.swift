@@ -91,6 +91,15 @@ class Util {
             
         }.resume()
     }
+    
+    class func getRegion(from encodedRegion: VTDictionary) -> MKCoordinateRegion {
+        let encodedCenter = encodedRegion["center"] as! VTDictionary
+        let center = CLLocationCoordinate2D(latitude: encodedCenter["latitude"] as! CLLocationDegrees, longitude: encodedCenter["longitude"] as! CLLocationDegrees)
+        let encodedSpan = encodedRegion["span"] as! VTDictionary
+        let span = MKCoordinateSpan(latitudeDelta: encodedSpan["latitudeDelta"] as! CLLocationDegrees, longitudeDelta: encodedSpan["longitudeDelta"] as! CLLocationDegrees)
+        
+        return MKCoordinateRegion(center: center, span: span)
+    }
 }
 
 extension UIColor {
@@ -134,10 +143,27 @@ extension UIImageView {
     }
 }
 
-//from https://stackoverflow.com/a/43851223/5903087
-extension UIBarButtonItem {
-    convenience init(barButtonSystemItem systemItem: UIBarButtonSystemItem, targetViewController: UIViewController?, action: Selector?) {
-        // call the initializer provided by UIKit
-        self.init(barButtonSystemItem: systemItem, target: targetViewController, action: action)
+extension MKCoordinateRegion {
+    var encoded: VTDictionary {
+        get {
+            return [
+                "center" : ["latitude" : center.latitude, "longitude" : center.longitude],
+                "span"   : span.encoded
+            ]
+        }
     }
 }
+
+extension MKCoordinateSpan {
+    var encoded: VTDictionary {
+        get {
+            return [
+                "latitudeDelta" : latitudeDelta,
+                "longitudeDelta"   : longitudeDelta
+            ]
+        }
+    }
+}
+
+
+

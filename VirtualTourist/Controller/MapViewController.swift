@@ -31,6 +31,15 @@ class MapViewController: CustomViewController {
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
         mapView.addGestureRecognizer(longPressGestureRecognizer)
+        
+        if let encodedRegion = UserDefaults.standard.value(forKey: VTConstants.UserDefaultsKeys.region) as? VTDictionary {
+            
+            let region = Util.getRegion(from: encodedRegion)
+            
+            performUIUpdatesOnMain {
+                self.mapView.setRegion(region, animated: true)
+            }
+        }
     }
     
     @IBAction func editButtonOnTap(_ sender: Any) {
@@ -127,6 +136,12 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         print(userLocation.location!.coordinate)
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(mapView.region.encoded, forKey: VTConstants.UserDefaultsKeys.region)
+        userDefaults.synchronize()
     }
 }
 
