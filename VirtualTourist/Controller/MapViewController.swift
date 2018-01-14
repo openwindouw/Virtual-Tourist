@@ -33,11 +33,8 @@ class MapViewController: CustomViewController {
         mapView.addGestureRecognizer(longPressGestureRecognizer)
         
         if let encodedRegion = UserDefaults.standard.value(forKey: VTConstants.UserDefaultsKeys.region) as? VTDictionary {
-            
-            let region = Util.getRegion(from: encodedRegion)
-            
             performUIUpdatesOnMain {
-                self.mapView.setRegion(region, animated: true)
+                self.mapView.setRegion(MKCoordinateRegion(encoded: encodedRegion), animated: true)
             }
         }
     }

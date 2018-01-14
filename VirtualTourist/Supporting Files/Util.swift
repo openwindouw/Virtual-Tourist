@@ -37,6 +37,12 @@ func performUIUpdatesOnMain(_ updates: @escaping () -> Void) {
     }
 }
 
+func runIn(seconds: Double, callback: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        callback()
+    }
+}
+
 class Util {
     
     class func showAlert(for message: String, in viewController: UIViewController) {
@@ -102,6 +108,8 @@ class Util {
     }
 }
 
+
+
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
@@ -151,6 +159,14 @@ extension MKCoordinateRegion {
                 "span"   : span.encoded
             ]
         }
+    }
+    
+    init(encoded: VTDictionary) {
+        let encodedCenter = encoded["center"] as! VTDictionary
+        let encodedSpan = encoded["span"] as! VTDictionary
+        
+        center = CLLocationCoordinate2D(latitude: encodedCenter["latitude"] as! CLLocationDegrees, longitude: encodedCenter["longitude"] as! CLLocationDegrees)
+        span = MKCoordinateSpan(latitudeDelta: encodedSpan["latitudeDelta"] as! CLLocationDegrees, longitudeDelta: encodedSpan["longitudeDelta"] as! CLLocationDegrees)
     }
 }
 
