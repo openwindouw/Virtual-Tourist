@@ -21,6 +21,7 @@
 		CEC25D301FFF053100A34130 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC25D2F1FFF053100A34130 /* PhotoCollectionViewCell.swift */; };
 		CEC25D331FFF0B3A00A34130 /* FlickrLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC25D321FFF0B3A00A34130 /* FlickrLayout.swift */; };
 		CEE2766520006A160089B6BB /* VTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2766420006A160089B6BB /* VTConstants.swift */; };
+		E731F4D6200AFDBF0052EB6B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E731F4D4200AFDBF0052EB6B /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		CEC25D2F1FFF053100A34130 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CEC25D321FFF0B3A00A34130 /* FlickrLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrLayout.swift; sourceTree = "<group>"; };
 		CEE2766420006A160089B6BB /* VTConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTConstants.swift; sourceTree = "<group>"; };
+		E731F4D5200AFDBF0052EB6B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 		CE1CE22C1FF9790E0022F57B /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
+				E731F4D4200AFDBF0052EB6B /* Model.xcdatamodeld */,
 				CEC25D311FFF0B1F00A34130 /* Layout */,
 				CEC25D2E1FFF050F00A34130 /* View */,
 				C392B5781FFD5DBB00E62B53 /* Model */,
@@ -214,6 +217,7 @@
 				CE1CE22E1FF9790E0022F57B /* AppDelegate.swift in Sources */,
 				CE722AD72002683A0080FBA5 /* FlickrConvenience.swift in Sources */,
 				CEC25D301FFF053100A34130 /* PhotoCollectionViewCell.swift in Sources */,
+				E731F4D6200AFDBF0052EB6B /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +402,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E731F4D4200AFDBF0052EB6B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E731F4D5200AFDBF0052EB6B /* Model.xcdatamodel */,
+			);
+			currentVersion = E731F4D5200AFDBF0052EB6B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CE1CE2221FF9790E0022F57B /* Project object */;
 }

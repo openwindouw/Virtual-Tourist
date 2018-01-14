@@ -27,7 +27,7 @@ class FlickrHandler: NSObject {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+        session.dataTask(with: request as URLRequest) { (data, response, error) in
             
             func sendError(_ error: String) {
                 let userInfo = [NSLocalizedDescriptionKey : error]
@@ -46,9 +46,7 @@ class FlickrHandler: NSObject {
             
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandler)
             
-        }
-        
-        task.resume()        
+        }.resume()
     }
     
     class func shared() -> FlickrHandler {
