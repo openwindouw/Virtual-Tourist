@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 enum EditState {
     case editing, normal
@@ -24,13 +25,51 @@ class MapViewController: CustomViewController {
     let buttonHeigh: CGFloat = 40
     var annotations: [MKPointAnnotation] = []
     
+    var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>? {
+        didSet {
+            if let fc = fetchedResultsController {
+                do {
+                    try fc.performFetch()
+                    print("Total PINs: \(fetchedResultsController?.sections?.first?.numberOfObjects ?? 0)")
+                } catch let e as NSError {
+                    print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+                }
+            }
+//            print("Total PINs: \(fetchedResultsController?.sections?.first?.numberOfObjects ?? 0)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
 
         buttonHeightConstraint.constant = .leastNormalMagnitude
         
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(revealRegionDetailsWithLongPressOnMap(sender:)))
         mapView.addGestureRecognizer(longPressGestureRecognizer)
+        
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
+        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack!.context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        if let test = fetchedResultsController?.fetchedObjects as? [Pin] {
+            annotations = test.map { pin in
+                let coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                
+                return annotation
+            }
+            
+            performUIUpdatesOnMain {
+                self.mapView.addAnnotations(self.annotations)
+            }
+        }
         
         if let encodedRegion = UserDefaults.standard.value(forKey: VTConstants.UserDefaultsKeys.region) as? VTDictionary {
             performUIUpdatesOnMain {
@@ -65,6 +104,10 @@ class MapViewController: CustomViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotations.append(annotation)
+        
+        let pin = Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, context: fetchedResultsController!.managedObjectContext)
+        
+        print("\(pin)")
         
         performUIUpdatesOnMain {
             self.mapView.addAnnotation(annotation)
