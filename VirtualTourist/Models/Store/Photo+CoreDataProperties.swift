@@ -2,7 +2,7 @@
 //  Photo+CoreDataProperties.swift
 //  VirtualTourist
 //
-//  Created by Vladimir Espinola on 1/14/18.
+//  Created by user on 1/17/18.
 //  Copyright © 2018 Vladimir Espinola. All rights reserved.
 //
 //
@@ -18,6 +18,7 @@ extension Photo {
     }
 
     @NSManaged public var image: NSData?
+    @NSManaged public var url: String?
     @NSManaged public var pin: Pin?
 
 }

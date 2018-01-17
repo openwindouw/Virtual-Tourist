@@ -41,9 +41,9 @@ extension FlickrHandler {
             let dictionaryResult = data as! VTDictionary
             
             if let photos = FlickrPhoto.getPhotosFrom(response: dictionaryResult) {
-                performUIUpdatesOnMain {
+//                performUIUpdatesOnMain {
                     onCompletion(photos)
-                }
+//                }
             } else {
                 Util.showAlert(for: "Cannot get photos from response.", in: viewController)
             }

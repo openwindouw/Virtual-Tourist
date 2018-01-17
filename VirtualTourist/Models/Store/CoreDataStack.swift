@@ -155,7 +155,7 @@ extension CoreDataStack {
                 try self.context.save()
                 print("Autosaving")
             } catch {
-                print("Error while autosaving")
+                print("Error while autosaving \(error)")
             }
             
             let delayInNanoSeconds = UInt64(delayInSeconds) * NSEC_PER_SEC

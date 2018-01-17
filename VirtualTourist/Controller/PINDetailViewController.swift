@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 enum PhotoAction {
     case get, delete
@@ -22,6 +23,8 @@ class PINDetailViewController: CustomViewController {
     
     var photos: [FlickrPhoto] = []
     var selectedPhotos: [FlickrPhoto] = []
+    
+    var pin: Pin!
     
     
     var currentAction: PhotoAction! = .get
