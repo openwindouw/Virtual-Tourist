@@ -39,12 +39,14 @@ class MapViewController: CustomViewController {
         }
     }
     
+    var stack: CoreDataStack!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Get the stack
         let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
+        stack = delegate.stack
 
         buttonHeightConstraint.constant = .leastNormalMagnitude
         
@@ -100,7 +102,6 @@ class MapViewController: CustomViewController {
         
         let coordinate = CLLocationCoordinate2D(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
         
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotations.append(annotation)
@@ -108,6 +109,8 @@ class MapViewController: CustomViewController {
         let pin = Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, context: fetchedResultsController!.managedObjectContext)
         
         print("\(pin)")
+        
+        stack.save()
         
         performUIUpdatesOnMain {
             self.mapView.addAnnotation(annotation)
