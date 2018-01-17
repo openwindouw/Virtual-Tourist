@@ -32,7 +32,7 @@ class MapViewController: CustomViewController {
                     try fc.performFetch()
                     print("Total PINs: \(fetchedResultsController?.sections?.first?.numberOfObjects ?? 0)")
                 } catch let e as NSError {
-                    print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+                    print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController.debugDescription)")
                 }
             }
 //            print("Total PINs: \(fetchedResultsController?.sections?.first?.numberOfObjects ?? 0)")
@@ -104,7 +104,7 @@ class MapViewController: CustomViewController {
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
-        annotations.append(annotation)
+//        annotations.append(annotation)
         
         let pin = Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, context: fetchedResultsController!.managedObjectContext)
         
@@ -138,14 +138,15 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        mapView.deselectAnnotation(view.annotation, animated: true)
         
-        
-        if currentEditState == .editing {
-            
-            if let currentAnnotation = view.annotation, let currentPointAnnotationIndex = annotations.index (where: {
-                return $0.coordinate.latitude == currentAnnotation.coordinate.latitude && $0.coordinate.longitude == currentAnnotation.coordinate.longitude
-            }) {
-                annotations.remove(at: currentPointAnnotationIndex)
+        if currentEditState == .editing {         
+            if let currentAnnotation = view.annotation, let pin = fetchedResultsController?.fetchedObjects?.first(where: {
+                guard let currentPin = $0 as? Pin else { return false }
+                return currentPin.latitude == currentAnnotation.coordinate.latitude && currentPin.longitude == currentAnnotation.coordinate.longitude
+            }) as? Pin  {
+                stack.context.delete(pin)
+                stack.save()
                 
                 performUIUpdatesOnMain {
                     mapView.removeAnnotation(currentAnnotation)
@@ -154,8 +155,6 @@ extension MapViewController: MKMapViewDelegate {
             
         } else {
             selectedAnnotation = view.annotation
-            
-            mapView.deselectAnnotation(view.annotation, animated: true)
             
             let bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
             
