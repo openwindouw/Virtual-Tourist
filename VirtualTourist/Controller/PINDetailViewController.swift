@@ -50,7 +50,7 @@ class PINDetailViewController: CustomViewController {
         
         actionButton.isEnabled = false
         
-        bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
+        bbox = Util.getBoundingBox(for: pin.latitude, and: pin.longitude)
         
         emptyCollectionCover.isHidden = true
         

@@ -36,18 +36,11 @@ class MapViewController: CustomViewController {
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
         
-        if let test = fetchedResultsController?.fetchedObjects as? [Pin] {
-            let annotations: [MKPointAnnotation] = test.map { pin in
-                let coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                
-                return annotation
-            }
-            
+        
+        
+        if let pins = fetchedResultsController?.fetchedObjects as? [Pin] {
             performUIUpdatesOnMain {
-                self.mapView.addAnnotations(annotations)
+                self.mapView.addAnnotations(pins)
             }
         }
         
@@ -74,21 +67,16 @@ class MapViewController: CustomViewController {
     @objc func revealRegionDetailsWithLongPressOnMap(sender: UILongPressGestureRecognizer) {
         
         guard currentEditState == .normal else { return }
-        guard sender.state == UIGestureRecognizerState.began else { return }
+        guard sender.state == .ended else { return }
         let touchLocation = sender.location(in: mapView)
         let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
         
-        let coordinate = CLLocationCoordinate2D(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        
-        let pin = Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, context: fetchedResultsController!.managedObjectContext)
+        let pin = Pin(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude, context: fetchedResultsController!.managedObjectContext)
         
         print("\(pin)")
         
         performUIUpdatesOnMain {
-            self.mapView.addAnnotation(annotation)
+            self.mapView.addAnnotation(pin)
         }
         
         AppDelegate.stack?.save()
@@ -117,13 +105,11 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: true)
         
-        
-        
         if let pin = view.annotation as? Pin  {
             switch currentEditState {
             case .editing:
                 performUIUpdatesOnMain {
-                    mapView.removeAnnotation(view.annotation!)
+                    mapView.removeAnnotation(pin)
                 }
                 
                 AppDelegate.stack?.context.delete(pin)
