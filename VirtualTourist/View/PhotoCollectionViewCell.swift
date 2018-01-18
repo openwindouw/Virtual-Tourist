@@ -17,7 +17,9 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            photoImageView.alpha = isSelected ? selectedAlpha : deselectedAlpha
+            performUIUpdatesOnMain {
+                self.photoImageView.alpha = self.isSelected ? self.selectedAlpha : self.deselectedAlpha
+            }
         }
     }
     
@@ -32,6 +34,8 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         photoImageView.layer.cornerRadius = VTConstants.Metrics.CornerRadius
         
         activityView.activityIndicatorViewStyle = .white
+        
+        hideActivityIndicator()
     }
     
     func showActivityIndicator() {

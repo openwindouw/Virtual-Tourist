@@ -21,8 +21,7 @@ class PINDetailViewController: CustomViewController {
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var emptyCollectionCover: UIView!
     
-    var photos: [FlickrPhoto] = []
-    var selectedPhotos: [FlickrPhoto] = []
+    var selectedPhotos: [Photo] = []
     
     var pin: Pin!
     
@@ -100,7 +99,7 @@ class PINDetailViewController: CustomViewController {
                 if photos.isEmpty {
                     self.setupEmptyCollection()
                 } else {
-                    self.photos = photos
+//                    self.photos = photos
                     self.collectionView.reloadData()
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                 }
@@ -108,20 +107,20 @@ class PINDetailViewController: CustomViewController {
             })
         } else {
             
-            print("before deleted: \(photos.count)")
-            
-            photos = photos.filter { photo in
-                return selectedPhotos.first(where: { selectedPhoto in
-                    return selectedPhoto == photo
-                }) == nil
-            }
-            
-            print("after deleted: \(photos.count)")
-            
-            
-            if photos.isEmpty {
-                setupEmptyCollection(enable: true)
-            }
+//            print("before deleted: \(photos.count)")
+//
+//            photos = photos.filter { photo in
+//                return selectedPhotos.first(where: { selectedPhoto in
+//                    return selectedPhoto == photo
+//                }) == nil
+//            }
+//
+//            print("after deleted: \(photos.count)")
+//
+//
+//            if photos.isEmpty {
+//                setupEmptyCollection(enable: true)
+//            }
             
             setupForNewCollection()
             collectionView.reloadData()
@@ -146,11 +145,11 @@ extension PINDetailViewController: UICollectionViewDataSource {
             cell.showActivityIndicator()
             
             Util.downloadImageFrom(link: link) { image in
-                cell.hideActivityIndicator()
-                
                 photo.image = image as NSData
                 
                 performUIUpdatesOnMain {
+                    cell.hideActivityIndicator()
+                    
                     if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
                         visibleCell.photoImageView.image = UIImage(data: image)
                     }
@@ -167,12 +166,12 @@ extension PINDetailViewController: UICollectionViewDataSource {
 
 extension PINDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedPhotos.append(photoFor(indexPath))
+        selectedPhotos.append(fetchedResultsController?.object(at: indexPath) as! Photo)
         setupForDeleteSelectedPhotos()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let index = selectedPhotos.index(of: photoFor(indexPath)) {
+        if let index = selectedPhotos.index(of: fetchedResultsController?.object(at: indexPath) as! Photo) {
             selectedPhotos.remove(at: index)
         }
         
@@ -204,7 +203,9 @@ extension PINDetailViewController: MKMapViewDelegate {
 extension PINDetailViewController {
     //MARK: Helpers
     func enableNewCollectionButton(with indexPath: IndexPath) {
-        if indexPath.row == ((min(photos.count, VTConstants.Flickr.MaxPhotos)) - 1) {
+        let count = fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
+        
+        if indexPath.row == ((min(count, VTConstants.Flickr.MaxPhotos)) - 1) {
             self.actionButton.isEnabled = true
         }
     }
@@ -223,10 +224,6 @@ extension PINDetailViewController {
     func setupForDeleteSelectedPhotos() {
         actionButton.setTitle("Delete Photos", for: .normal)
         currentAction = .delete
-    }
-    
-    func photoFor(_ indexPath: IndexPath) -> FlickrPhoto {
-        return photos[indexPath.row]
     }
 }
 
