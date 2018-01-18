@@ -21,7 +21,7 @@ class MapViewController: CustomViewController {
     
     var currentEditState: EditState! = .normal
     
-    let buttonHeigh: CGFloat = 40
+    let labelHeight: CGFloat = 40
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,6 @@ class MapViewController: CustomViewController {
         fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        
         
         if let pins = fetchedResultsController?.fetchedObjects as? [Pin] {
             performUIUpdatesOnMain {
@@ -54,7 +52,7 @@ class MapViewController: CustomViewController {
     @IBAction func editButtonOnTap(_ sender: Any) {
         if currentEditState == .normal {
             editButton.title = "Done"
-            buttonHeightConstraint.constant = buttonHeigh
+            buttonHeightConstraint.constant = labelHeight
             currentEditState = .editing
         } else {
             editButton.title = "Edit"

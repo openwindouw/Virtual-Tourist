@@ -60,17 +60,30 @@ class PINDetailViewController: CustomViewController {
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
         
+        
+        
         //show empty cover if photos array is empty
         if photos.isEmpty {
             setupEmptyCollection()
         }
         
         let pointAnnotation = MKPointAnnotation()
-        pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+        pointAnnotation.coordinate = pin.coordinate
         
         //show selectedAnnotation
         performUIUpdatesOnMain {
             self.mapView.showAnnotations([pointAnnotation], animated: true)
+        }
+        
+        if let count = pin.photos?.count, count == 0{
+            FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
+                photos.forEach { flickrPhoto in
+                    let photo = Photo(flickrPhoto: flickrPhoto, context: AppDelegate.stack!.context)
+                    photo.pin = self.pin
+                }
+                
+                AppDelegate.stack?.save()
+            })
         }
        
     }
@@ -119,30 +132,28 @@ class PINDetailViewController: CustomViewController {
 
 extension PINDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
         
-        
+        let photo = fetchedResultsController?.object(at: indexPath) as! Photo
 
-        let photo = photos[indexPath.row]
-        
         if let image = photo.image {
-            cell.photoImageView.image = image
+            cell.photoImageView.image = UIImage(data: image as Data)
         } else if let link = photo.url {
             cell.showActivityIndicator()
             
             Util.downloadImageFrom(link: link) { image in
                 cell.hideActivityIndicator()
                 
-                self.photos[indexPath.row].image = image
+                photo.image = image as NSData
                 
                 if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
                     
                     performUIUpdatesOnMain {
-                        visibleCell.photoImageView.image = image
+                        visibleCell.photoImageView.image = UIImage(data: image)
                     }
                     
                 }
