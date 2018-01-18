@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import CoreData
 
 class CustomViewController: UIViewController {
     
     let alphaPercentage: CGFloat = 0.7
     
     var activityIndicator: UIActivityIndicatorView!
+    
+    var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
+        didSet {
+            // Whenever the frc changes, we execute the search and
+            print("COUNT: \(fetchedResultsController?.sections?.first?.numberOfObjects ?? 0)")
+            fetchedResultsController?.delegate = self
+            executeSearch()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,4 +58,26 @@ class CustomViewController: UIViewController {
         }
     }
 
+}
+
+extension CustomViewController {
+    
+    func executeSearch() {
+        if let fc = fetchedResultsController {
+            do {
+                try fc.performFetch()
+            } catch let e as NSError {
+                print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+            }
+        }
+    }
+}
+
+// MARK: - NSFetchedResultsControllerDelegate
+extension CustomViewController: NSFetchedResultsControllerDelegate  {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {}
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {}
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {}
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {}
 }

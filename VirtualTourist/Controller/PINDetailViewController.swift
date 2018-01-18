@@ -26,10 +26,8 @@ class PINDetailViewController: CustomViewController {
     
     var pin: Pin!
     
-    
     var currentAction: PhotoAction! = .get
     var bbox: String!
-    var maxPhotos: Int!
     
     var selectedAnnotation: MKAnnotation!
     
@@ -52,19 +50,27 @@ class PINDetailViewController: CustomViewController {
         
         actionButton.isEnabled = false
         
-        //set max photos number
-        maxPhotos = min(photos.count, VTConstants.Flickr.MaxPhotos)
+        bbox = Util.getBoundingBox(for: selectedAnnotation.coordinate.latitude, and: selectedAnnotation.coordinate.longitude)
         
         emptyCollectionCover.isHidden = true
+        
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
+        fr.sortDescriptors = [NSSortDescriptor(key: "url", ascending: true)]
+        fr.predicate = NSPredicate(format: "pin == %@", argumentArray: [pin])
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
         
         //show empty cover if photos array is empty
         if photos.isEmpty {
             setupEmptyCollection()
         }
         
+        let pointAnnotation = MKPointAnnotation()
+        pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)
+        
         //show selectedAnnotation
         performUIUpdatesOnMain {
-            self.mapView.showAnnotations([self.selectedAnnotation], animated: true)
+            self.mapView.showAnnotations([pointAnnotation], animated: true)
         }
        
     }
@@ -118,6 +124,8 @@ extension PINDetailViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoDetailCellID", for: indexPath) as! PhotoCollectionViewCell
+        
+        
 
         let photo = photos[indexPath.row]
         
@@ -187,7 +195,7 @@ extension PINDetailViewController: MKMapViewDelegate {
 extension PINDetailViewController {
     //MARK: Helpers
     func enableNewCollectionButton(with indexPath: IndexPath) {
-        if indexPath.row == (maxPhotos - 1) {
+        if indexPath.row == ((min(photos.count, VTConstants.Flickr.MaxPhotos)) - 1) {
             self.actionButton.isEnabled = true
         }
     }
