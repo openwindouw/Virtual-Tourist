@@ -60,10 +60,8 @@ class PINDetailViewController: CustomViewController {
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
         
-        
-        
         //show empty cover if photos array is empty
-        if photos.isEmpty {
+        if let count = pin.photos?.count, count == 0 {
             setupEmptyCollection()
         }
         
@@ -75,6 +73,9 @@ class PINDetailViewController: CustomViewController {
             self.mapView.showAnnotations([pointAnnotation], animated: true)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         if let count = pin.photos?.count, count == 0{
             FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
                 photos.forEach { flickrPhoto in
@@ -85,7 +86,6 @@ class PINDetailViewController: CustomViewController {
                 AppDelegate.stack?.save()
             })
         }
-       
     }
     
     override func viewDidLayoutSubviews() {
@@ -150,12 +150,10 @@ extension PINDetailViewController: UICollectionViewDataSource {
                 
                 photo.image = image as NSData
                 
-                if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
-                    
-                    performUIUpdatesOnMain {
+                performUIUpdatesOnMain {
+                    if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
                         visibleCell.photoImageView.image = UIImage(data: image)
                     }
-                    
                 }
                 
                 self.enableNewCollectionButton(with: indexPath)

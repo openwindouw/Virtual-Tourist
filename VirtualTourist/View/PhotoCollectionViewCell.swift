@@ -39,8 +39,11 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
 
     func hideActivityIndicator() {
-        activityView.stopAnimating()
-        activityView.isHidden = true
+        performUIUpdatesOnMain {
+            self.activityView.isHidden = true
+            self.activityView.stopAnimating()
+        }
+        
     }
     
     override func prepareForReuse() {
