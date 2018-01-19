@@ -47,7 +47,7 @@ class PINDetailViewController: CustomViewController {
         mapView.isScrollEnabled = false
         mapView.isUserInteractionEnabled = false
         
-        actionButton.isEnabled = false
+//        actionButton.isEnabled = false
         
         bbox = Util.getBoundingBox(for: pin.latitude, and: pin.longitude)
         
@@ -58,11 +58,6 @@ class PINDetailViewController: CustomViewController {
         fr.predicate = NSPredicate(format: "pin == %@", argumentArray: [pin])
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: AppDelegate.stack!.context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        //show empty cover if photos array is empty
-        if let count = pin.photos?.count, count == 0 {
-            setupEmptyCollection()
-        }
         
         let pointAnnotation = MKPointAnnotation()
         pointAnnotation.coordinate = pin.coordinate
@@ -75,16 +70,7 @@ class PINDetailViewController: CustomViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let count = pin.photos?.count, count == 0{
-            FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
-                photos.forEach { flickrPhoto in
-                    let photo = Photo(flickrPhoto: flickrPhoto, context: AppDelegate.stack!.context)
-                    photo.pin = self.pin
-                }
-                
-                AppDelegate.stack?.save()
-            })
-        }
+        getNewCollection()
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,33 +80,24 @@ class PINDetailViewController: CustomViewController {
     
     @IBAction func actionButtonOnTap(_ sender: Any) {
         if currentAction == .get {
-            FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
-                
-                if photos.isEmpty {
-                    self.setupEmptyCollection()
-                } else {
-//                    self.photos = photos
+            
+            for photo in fetchedResultsController?.fetchedObjects as! [Photo] {
+                AppDelegate.stack?.context.delete(photo)
+            }
+            
+            getNewCollection() {
+                performUIUpdatesOnMain {
                     self.collectionView.reloadData()
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
                 }
-                
-            })
+            }
         } else {
             
-//            print("before deleted: \(photos.count)")
-//
-//            photos = photos.filter { photo in
-//                return selectedPhotos.first(where: { selectedPhoto in
-//                    return selectedPhoto == photo
-//                }) == nil
-//            }
-//
-//            print("after deleted: \(photos.count)")
-//
-//
-//            if photos.isEmpty {
-//                setupEmptyCollection(enable: true)
-//            }
+            selectedPhotos.forEach { photo in
+                AppDelegate.stack?.context.delete(photo)
+            }
+            
+            AppDelegate.stack?.save()
             
             setupForNewCollection()
             collectionView.reloadData()
@@ -149,14 +126,9 @@ extension PINDetailViewController: UICollectionViewDataSource {
                 
                 performUIUpdatesOnMain {
                     cell.hideActivityIndicator()
-                    
-                    if let visibleCell = collectionView.cellForItem(at: indexPath) as? PhotoCollectionViewCell {
-                        visibleCell.photoImageView.image = UIImage(data: image)
-                    }
+                    cell.photoImageView.image = UIImage(data: image)
                 }
-                
-                self.enableNewCollectionButton(with: indexPath)
-                
+               
             }
         }
         
@@ -202,28 +174,61 @@ extension PINDetailViewController: MKMapViewDelegate {
 
 extension PINDetailViewController {
     //MARK: Helpers
-    func enableNewCollectionButton(with indexPath: IndexPath) {
-        let count = fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
-        
-        if indexPath.row == ((min(count, VTConstants.Flickr.MaxPhotos)) - 1) {
-            self.actionButton.isEnabled = true
+    
+    func getNewCollection(onCompletion: (() -> Void)? = nil) {
+        if let count = pin.photos?.count, count == 0{
+            
+            FlickrHandler.shared().getPhotos(with: bbox, in: self, onCompletion: { photos in
+                
+                guard !photos.isEmpty else {
+                    self.setupEmptyCollection()
+                    return
+                }
+                
+                photos.forEach { flickrPhoto in
+                    let photo = Photo(flickrPhoto: flickrPhoto, context: AppDelegate.stack!.context)
+                    photo.pin = self.pin
+                }
+                
+                AppDelegate.stack?.save()
+                
+                onCompletion?()
+            })
         }
     }
     
+//    func enableNewCollectionButton(with indexPath: IndexPath) {
+//        let count = fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
+//
+//        if indexPath.row == ((min(count, VTConstants.Flickr.MaxPhotos)) - 1) {
+//            performUIUpdatesOnMain {
+//                self.actionButton.isEnabled = true
+//            }
+//        }
+//    }
+    
     func setupEmptyCollection(enable actionIsEnabled: Bool = false) {
-        self.collectionView.isHidden = true
-        self.emptyCollectionCover.isHidden = false
-        self.actionButton.isEnabled = actionIsEnabled
+        performUIUpdatesOnMain {
+            self.collectionView.isHidden = true
+            self.emptyCollectionCover.isHidden = false
+            self.actionButton.isEnabled = actionIsEnabled
+        }
     }
     
     func setupForNewCollection() {
-        actionButton.setTitle("New Collection", for: .normal)
-        currentAction = .get
+        performUIUpdatesOnMain {
+            self.actionButton.isEnabled = true
+            self.actionButton.setTitle("New Collection", for: .normal)
+            self.currentAction = .get
+        }
     }
     
     func setupForDeleteSelectedPhotos() {
-        actionButton.setTitle("Delete Photos", for: .normal)
-        currentAction = .delete
+        performUIUpdatesOnMain {
+            self.actionButton.isEnabled = true
+            self.actionButton.setTitle("Delete Photos", for: .normal)
+            self.currentAction = .delete
+        }
     }
 }
 
