@@ -47,8 +47,6 @@ class PINDetailViewController: CustomViewController {
         mapView.isScrollEnabled = false
         mapView.isUserInteractionEnabled = false
         
-//        actionButton.isEnabled = false
-        
         bbox = Util.getBoundingBox(for: pin.latitude, and: pin.longitude)
         
         emptyCollectionCover.isHidden = true
@@ -70,7 +68,12 @@ class PINDetailViewController: CustomViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getNewCollection()
+        getNewCollection() {
+            performUIUpdatesOnMain {
+                self.setupForNewCollection()
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -84,6 +87,8 @@ class PINDetailViewController: CustomViewController {
             for photo in fetchedResultsController?.fetchedObjects as! [Photo] {
                 AppDelegate.stack?.context.delete(photo)
             }
+            
+            AppDelegate.stack?.save()
             
             getNewCollection() {
                 performUIUpdatesOnMain {
@@ -128,6 +133,12 @@ extension PINDetailViewController: UICollectionViewDataSource {
                     cell.hideActivityIndicator()
                     cell.photoImageView.image = UIImage(data: image)
                 }
+                
+                AppDelegate.stack?.performBackgroundBatchOperation({ backgroundContext in
+                    backgroundContext.parent = AppDelegate.stack?.context
+                    
+                    
+                })
                
             }
         }
