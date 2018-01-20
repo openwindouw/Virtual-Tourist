@@ -8,6 +8,7 @@
 
 import UIKit
 
+//from https://www.raywenderlich.com/164608/uicollectionview-custom-layout-tutorial-pinterest-2
 class FlickrLayout: UICollectionViewLayout {
     
     fileprivate var numberOfColumns = 3
