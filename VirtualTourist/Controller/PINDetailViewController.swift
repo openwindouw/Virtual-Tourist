@@ -62,7 +62,7 @@ class PINDetailViewController: CustomViewController {
         
         //show selectedAnnotation
         performUIUpdatesOnMain {
-            self.mapView.showAnnotations([pointAnnotation], animated: true)
+            self.mapView.showAnnotations([pointAnnotation], animated: false)
         }
         
     }
@@ -86,6 +86,10 @@ class PINDetailViewController: CustomViewController {
             
             for photo in fetchedResultsController?.fetchedObjects as! [Photo] {
                 AppDelegate.stack?.context.delete(photo)
+            }
+            
+            performUIUpdatesOnMain {
+                self.collectionView.reloadData()
             }
             
             AppDelegate.stack?.save()
@@ -124,22 +128,17 @@ extension PINDetailViewController: UICollectionViewDataSource {
         if let image = photo.image {
             cell.photoImageView.image = UIImage(data: image as Data)
         } else if let link = photo.url {
-            cell.showActivityIndicator()
             
             Util.downloadImageFrom(link: link) { image in
                 photo.image = image as NSData
                 
                 performUIUpdatesOnMain {
-                    cell.hideActivityIndicator()
                     cell.photoImageView.image = UIImage(data: image)
                 }
                 
                 AppDelegate.stack?.performBackgroundBatchOperation({ backgroundContext in
                     backgroundContext.parent = AppDelegate.stack?.context
-                    
-                    
                 })
-               
             }
         }
         
@@ -207,16 +206,6 @@ extension PINDetailViewController {
             })
         }
     }
-    
-//    func enableNewCollectionButton(with indexPath: IndexPath) {
-//        let count = fetchedResultsController?.sections?.first?.numberOfObjects ?? 0
-//
-//        if indexPath.row == ((min(count, VTConstants.Flickr.MaxPhotos)) - 1) {
-//            performUIUpdatesOnMain {
-//                self.actionButton.isEnabled = true
-//            }
-//        }
-//    }
     
     func setupEmptyCollection(enable actionIsEnabled: Bool = false) {
         performUIUpdatesOnMain {

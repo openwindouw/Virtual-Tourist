@@ -10,7 +10,6 @@ import UIKit
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     let selectedAlpha: CGFloat = 0.5
     let deselectedAlpha: CGFloat = 1
@@ -30,24 +29,10 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         contentView.layoutIfNeeded()
         
         photoImageView.contentMode = .scaleAspectFit
-        photoImageView.backgroundColor = UIColor.lightGray
+        photoImageView.backgroundColor = UIColor.lightGray.withAlphaComponent(selectedAlpha)
         photoImageView.layer.cornerRadius = VTConstants.Metrics.CornerRadius
-        
-        activityView.activityIndicatorViewStyle = .white
-        
-        hideActivityIndicator()
-    }
-    
-    func showActivityIndicator() {
-        activityView.startAnimating()
-    }
 
-    func hideActivityIndicator() {
-        performUIUpdatesOnMain {
-            self.activityView.isHidden = true
-            self.activityView.stopAnimating()
-        }
-        
+        photoImageView.image = UIImage(named: "placeholder-1")
     }
     
     override func prepareForReuse() {

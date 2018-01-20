@@ -119,23 +119,15 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cu4-Rp-ssF">
                                                     <rect key="frame" x="0.0" y="0.0" width="131" height="109"/>
                                                 </imageView>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="oO9-ke-6rb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="131" height="109"/>
-                                                </activityIndicatorView>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="cu4-Rp-ssF" firstAttribute="top" secondItem="vqF-bP-pSv" secondAttribute="top" id="3fk-L1-io9"/>
                                             <constraint firstItem="cu4-Rp-ssF" firstAttribute="leading" secondItem="vqF-bP-pSv" secondAttribute="leading" id="Eit-mH-phg"/>
                                             <constraint firstAttribute="trailing" secondItem="cu4-Rp-ssF" secondAttribute="trailing" id="ICz-V7-hhy"/>
-                                            <constraint firstItem="oO9-ke-6rb" firstAttribute="top" secondItem="cu4-Rp-ssF" secondAttribute="top" id="Y9j-s2-i24"/>
-                                            <constraint firstItem="oO9-ke-6rb" firstAttribute="trailing" secondItem="cu4-Rp-ssF" secondAttribute="trailing" id="YVu-k5-ZJo"/>
-                                            <constraint firstItem="oO9-ke-6rb" firstAttribute="bottom" secondItem="cu4-Rp-ssF" secondAttribute="bottom" id="akN-og-0S0"/>
                                             <constraint firstAttribute="bottom" secondItem="cu4-Rp-ssF" secondAttribute="bottom" id="gKG-iy-wbX"/>
-                                            <constraint firstItem="oO9-ke-6rb" firstAttribute="leading" secondItem="cu4-Rp-ssF" secondAttribute="leading" id="une-Yt-kRe"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="activityView" destination="oO9-ke-6rb" id="EMq-PB-msT"/>
                                             <outlet property="photoImageView" destination="cu4-Rp-ssF" id="uV4-5J-eic"/>
                                         </connections>
                                     </collectionViewCell>
