@@ -153,7 +153,7 @@ extension PINDetailViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let index = selectedPhotos.index(of: fetchedResultsController?.object(at: indexPath) as! Photo) {
+        if let index = selectedPhotos.firstIndex(of: fetchedResultsController?.object(at: indexPath) as! Photo) {
             selectedPhotos.remove(at: index)
         }
         

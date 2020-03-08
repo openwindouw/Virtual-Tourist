@@ -31,7 +31,7 @@ class CustomViewController: UIViewController {
         activityIndicator.center = self.view.center
         activityIndicator.backgroundColor = UIColor.black.withAlphaComponent(alphaPercentage)
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.style = .whiteLarge
         view.addSubview(activityIndicator)
     }
     

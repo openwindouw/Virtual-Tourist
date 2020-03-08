@@ -63,7 +63,7 @@ class Util {
         }
         
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         } else {
             UIApplication.shared.openURL(url)
         }
@@ -125,7 +125,7 @@ extension UIColor {
 
 //from: https://stackoverflow.com/a/27712427
 extension UIImageView {
-    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit, callback: ((UIImage) -> Void)? = nil) {
+    func downloadedFrom(url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit, callback: ((UIImage) -> Void)? = nil) {
         contentMode = mode
         
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -144,7 +144,7 @@ extension UIImageView {
         }.resume()
     }
     
-    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, callback: ((UIImage) -> Void)? = nil) {
+    func downloadedFrom(link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit, callback: ((UIImage) -> Void)? = nil) {
         guard let url = URL(string: link) else { return }
         downloadedFrom(url: url, contentMode: mode, callback: callback)
     }
@@ -182,3 +182,8 @@ extension MKCoordinateSpan {
 
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}
